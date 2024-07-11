@@ -20,14 +20,15 @@
 #*  limitations under the License.                                           *
 #*                                                                           *
 #****************************************************************************/
-import os
 import glob
-import re
-import sys
-import shutil
+import os
 import platform
+import re
+import shutil
 import stat
+import sys
 import xml.dom.minidom
+
 
 class Harvest:
     def __init__(self, rootDir, outDir, arch, osName):
@@ -467,7 +468,7 @@ $(OUTPUT_FILE): copy-redist
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print 'Usage: ' + sys.argv[0] + ' <OutDir> <x86|x64|Arm|Android>'
+        print('Usage: ' + sys.argv[0] + ' <OutDir> <x86|x64|Arm|Aarch64|Android>')
         exit(1)
 
     rootDir = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), '..'))
