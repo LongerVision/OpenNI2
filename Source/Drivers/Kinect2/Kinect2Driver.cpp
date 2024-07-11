@@ -1,6 +1,6 @@
 #include "Kinect2Driver.h"
 #include "Kinect2Device.h"
-#include <Kinect.h>
+// #include <Kinect.h>
 
 using namespace oni::driver;
 using namespace kinect2_device;
@@ -42,7 +42,7 @@ OniStatus Kinect2Driver::initialize(DeviceConnectedCallback connectedCallback,
   // Wait some time to let the sensor initialize
   Sleep(500);
 
-  BOOLEAN available;
+  bool available;
   hr = pKinectSensor->get_IsAvailable(&available);
   if (FAILED(hr) || !available) {
     pKinectSensor->Close();
@@ -52,7 +52,7 @@ OniStatus Kinect2Driver::initialize(DeviceConnectedCallback connectedCallback,
 
   // Get sensor info
   OniDeviceInfo* pInfo = XN_NEW(OniDeviceInfo);
-  WCHAR sensorId[ONI_MAX_STR];
+  wchar_t sensorId[ONI_MAX_STR];
   pKinectSensor->get_UniqueKinectId(ONI_MAX_STR, sensorId);
 	size_t convertedChars = 0;
 	const size_t newsize = ONI_MAX_STR;
@@ -98,7 +98,7 @@ DeviceBase* Kinect2Driver::deviceOpen(const char* uri, const char* /*mode*/)
 
         // Compare sensor id. TODO: To be removed when multi-device support is added
         char sensorUri[ONI_MAX_STR];
-        WCHAR sensorId[ONI_MAX_STR];
+        wchar_t sensorId[ONI_MAX_STR];
         pKinectSensor->get_UniqueKinectId(ONI_MAX_STR, sensorId);
 	      size_t convertedChars = 0;
 	      const size_t newsize = ONI_MAX_STR;
