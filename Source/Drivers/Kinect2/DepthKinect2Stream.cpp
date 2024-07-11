@@ -17,7 +17,7 @@ DepthKinect2Stream::DepthKinect2Stream(Kinect2StreamImpl* pStreamImpl)
   m_videoMode.resolutionX = 512;
   m_videoMode.resolutionY = 424;
   m_colorSpaceCoords = new ColorSpacePoint[512*424];
-  m_registeredDepthMap = new UINT16[512*424];
+  m_registeredDepthMap = new uint16_t[512*424];
 }
 
 DepthKinect2Stream::~DepthKinect2Stream()
@@ -53,7 +53,7 @@ void DepthKinect2Stream::frameReady(void* data, int width, int height, double ti
   pFrame->frameIndex = m_frameIdx++;
   pFrame->timestamp = static_cast<int>(timestamp);
 
-  UINT16* data_in = reinterpret_cast<UINT16*>(data);
+  uint16_t* data_in = reinterpret_cast<uint16_t*>(data);
   if (m_pStreamImpl->getImageRegistrationMode() == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR) {
     copyDepthPixelsWithImageRegistration(data_in, width, height, pFrame);
   } else {
@@ -116,7 +116,7 @@ void DepthKinect2Stream::notifyAllProperties()
   BaseKinect2Stream::notifyAllProperties();
 }
 
-void DepthKinect2Stream::copyDepthPixelsStraight(const UINT16* data_in, int width, int height, OniFrame* pFrame)
+void DepthKinect2Stream::copyDepthPixelsStraight(const uint16_t* data_in, int width, int height, OniFrame* pFrame)
 {
   // Copy the depth pixels to OniDriverFrame
   // with applying cropping but NO depth-to-image registration.
@@ -138,7 +138,7 @@ void DepthKinect2Stream::copyDepthPixelsStraight(const UINT16* data_in, int widt
   }
 }
 
-void DepthKinect2Stream::copyDepthPixelsWithImageRegistration(const UINT16* data_in, int width, int height, OniFrame* pFrame)
+void DepthKinect2Stream::copyDepthPixelsWithImageRegistration(const uint16_t* data_in, int width, int height, OniFrame* pFrame)
 {
   // Copy the depth pixels to OniDriverFrame
   // with applying cropping and depth-to-image registration.
@@ -190,7 +190,7 @@ void DepthKinect2Stream::copyDepthPixelsWithImageRegistration(const UINT16* data
       if (*iter == 0) {
         unsigned short davg = 0;
         int dw = 0;
-        for (int ky = max(y - 1, 0); ky <= y + 1 && ky < height; ky++) {
+        for (int ky = std::max(y - 1, 0); ky <= y + 1 && ky < height; ky++) {
           unsigned short* kiter = const_cast<unsigned short*>(m_registeredDepthMap + (ky*width + x));
           if (*kiter != 0) {
             davg += *kiter;

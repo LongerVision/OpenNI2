@@ -1,6 +1,7 @@
 #ifndef _KINECT2_STREAM_IMPL_H_
 #define _KINECT2_STREAM_IMPL_H_
 
+#include "Kinect2Compat.h"
 #include "BaseKinect2Stream.h"
 #include "XnList.h"
 
@@ -16,7 +17,7 @@ namespace kinect2_device
   class Kinect2StreamImpl
   {
     public:
-      Kinect2StreamImpl(IKinectSensor * pKinectSensor, OniSensorType sensorType, LONGLONG basePerfCounter);
+      Kinect2StreamImpl(IKinectSensor * pKinectSensor, OniSensorType sensorType, long long basePerfCounter);
       virtual ~Kinect2StreamImpl();
 
       void addStream(BaseKinect2Stream* stream);
@@ -59,8 +60,8 @@ namespace kinect2_device
       ICoordinateMapper* m_pCoordinateMapper;
       union {
         RGBQUAD* color;
-        UINT16* depth;
-        UINT16* infrared;
+        uint16_t* depth;
+        uint16_t* infrared;
       } m_pFrameBuffer;
       union {
         IColorFrameReader* color;
@@ -74,7 +75,7 @@ namespace kinect2_device
 
       // Thread
       bool m_running;
-      LONGLONG m_perfCounter;
+      long long m_perfCounter;
       double m_perfFreq;
       XN_THREAD_HANDLE m_threadHandle;
   };
