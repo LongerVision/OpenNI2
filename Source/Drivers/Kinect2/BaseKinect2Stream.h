@@ -1,7 +1,7 @@
 #ifndef _BASE_KINECT2_STREAM_H_
 #define _BASE_KINECT2_STREAM_H_
 
-#include "Driver\OniDriverAPI.h"
+#include "Driver/OniDriverAPI.h"
 
 namespace kinect2_device
 {
