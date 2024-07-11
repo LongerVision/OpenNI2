@@ -1,7 +1,7 @@
 #ifndef _KINECT2_DRIVER_H_
 #define _KINECT2_DRIVER_H_
 
-#include "Driver\OniDriverAPI.h"
+#include "Driver/OniDriverAPI.h"
 #include "XnHash.h"
 
 namespace kinect2_device
