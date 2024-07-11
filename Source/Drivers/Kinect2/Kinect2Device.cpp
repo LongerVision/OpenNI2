@@ -1,8 +1,9 @@
+#include "Kinect2Driver.h"
 #include "Kinect2Device.h"
 #include "DepthKinect2Stream.h"
 #include "ColorKinect2Stream.h"
 #include "IRKinect2Stream.h"
-#include <Kinect.h>
+// #include <Kinect.h>
 
 using namespace kinect2_device;
 using namespace oni::driver;

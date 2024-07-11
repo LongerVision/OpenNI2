@@ -1,7 +1,8 @@
 #include "Kinect2StreamImpl.h"
 #include "BaseKinect2Stream.h"
 
-#include <Kinect.h>
+#include "Kinect2Driver.h"
+#include "Kinect2Device.h"
 
 using namespace oni::driver;
 using namespace kinect2_device;
@@ -9,7 +10,7 @@ using namespace xnl;
 
 #define DEFAULT_FPS 30
 
-Kinect2StreamImpl::Kinect2StreamImpl(IKinectSensor *pKinectSensor, OniSensorType sensorType, LONGLONG basePerfCounter)
+Kinect2StreamImpl::Kinect2StreamImpl(IKinectSensor *pKinectSensor, OniSensorType sensorType, long long basePerfCounter)
   : m_pKinectSensor(pKinectSensor),
     m_pCoordinateMapper(NULL),
     m_sensorType(sensorType),
@@ -280,10 +281,10 @@ void Kinect2StreamImpl::createFrameBuffer()
     m_pFrameBuffer.color = new RGBQUAD[1920*1080];
   }
   else if (m_sensorType == ONI_SENSOR_DEPTH && !m_pFrameBuffer.depth) {
-    m_pFrameBuffer.depth = new UINT16[512*424];
+    m_pFrameBuffer.depth = new uint16_t[512*424];
   }
   else if (!m_pFrameBuffer.infrared) { // ONI_SENSOR_IR
-    m_pFrameBuffer.infrared = new UINT16[512*424];
+    m_pFrameBuffer.infrared = new uint16_t[512*424];
   }
 }
 
@@ -387,12 +388,12 @@ void* Kinect2StreamImpl::populateFrameBuffer(int& buffWidth, int& buffHeight)
         if (SUCCEEDED(hr)) {
           if (imageFormat == ColorImageFormat_Bgra) {
             RGBQUAD* data;
-            UINT bufferSize;
-            frame->AccessRawUnderlyingBuffer(&bufferSize, reinterpret_cast<BYTE**>(&data));
+            uint32_t bufferSize;
+            frame->AccessRawUnderlyingBuffer(&bufferSize, reinterpret_cast<uint8_t**>(&data));
             memcpy(m_pFrameBuffer.color, data, 1920*1080*sizeof(RGBQUAD));
           }
           else {
-            frame->CopyConvertedFrameDataToArray(1920*1080*sizeof(RGBQUAD), reinterpret_cast<BYTE*>(m_pFrameBuffer.color), ColorImageFormat_Bgra);
+            frame->CopyConvertedFrameDataToArray(1920*1080*sizeof(RGBQUAD), reinterpret_cast<uint8_t*>(m_pFrameBuffer.color), ColorImageFormat_Bgra);
           }
         }
       }
@@ -411,10 +412,10 @@ void* Kinect2StreamImpl::populateFrameBuffer(int& buffWidth, int& buffHeight)
       IDepthFrame* frame = NULL;
       HRESULT hr = m_pFrameReader.depth->AcquireLatestFrame(&frame);
       if (SUCCEEDED(hr)) {
-        UINT16* data;
-        UINT bufferSize;
+        uint16_t* data;
+        uint32_t bufferSize;
         frame->AccessUnderlyingBuffer(&bufferSize, &data);
-        memcpy(m_pFrameBuffer.depth, data, 512*424*sizeof(UINT16));
+        memcpy(m_pFrameBuffer.depth, data, 512*424*sizeof(uint16_t));
       }
       if (frame) {
         frame->Release();
@@ -431,10 +432,10 @@ void* Kinect2StreamImpl::populateFrameBuffer(int& buffWidth, int& buffHeight)
       IInfraredFrame* frame = NULL;
       HRESULT hr = m_pFrameReader.infrared->AcquireLatestFrame(&frame);
       if (SUCCEEDED(hr)) {
-        UINT16* data;
-        UINT bufferSize;
+        uint16_t* data;
+        uint32_t bufferSize;
         frame->AccessUnderlyingBuffer(&bufferSize, &data);
-        memcpy(m_pFrameBuffer.infrared, data, 512*424*sizeof(UINT16));
+        memcpy(m_pFrameBuffer.infrared, data, 512*424*sizeof(uint16_t));
       }
       if (frame) {
         frame->Release();
