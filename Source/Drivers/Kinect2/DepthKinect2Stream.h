@@ -1,8 +1,10 @@
 #ifndef _DEPTH_KINECT2_STREAM_H_
 #define _DEPTH_KINECT2_STREAM_H_
 
+#include "Kinect2Driver.h"
+#include "Kinect2Device.h"
 #include "BaseKinect2Stream.h"
-#include <Kinect.h>
+// #include <Kinect.h>
 
 namespace kinect2_device
 {
@@ -19,12 +21,12 @@ namespace kinect2_device
       virtual void notifyAllProperties();
 
     private:
-      void copyDepthPixelsStraight(const UINT16* data_in, int width, int height, OniFrame* pFrame);
-      void copyDepthPixelsWithImageRegistration(const UINT16* data_in, int width, int height, OniFrame* pFrame);
+      void copyDepthPixelsStraight(const uint16_t* data_in, int width, int height, OniFrame* pFrame);
+      void copyDepthPixelsWithImageRegistration(const uint16_t* data_in, int width, int height, OniFrame* pFrame);
 
     private:
       ColorSpacePoint* m_colorSpaceCoords;
-      UINT16* m_registeredDepthMap;
+      uint16_t* m_registeredDepthMap;
   };
 } // namespace kinect2_device
 
