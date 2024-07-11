@@ -75,8 +75,4 @@ private:
 }
 
 
-
-
-
-
 #endif // MWCLOSESTPOINT_H
