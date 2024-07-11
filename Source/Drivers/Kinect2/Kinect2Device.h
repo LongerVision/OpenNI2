@@ -1,7 +1,7 @@
 #ifndef _KINECT2_DEVICE_H_
 #define _KINECT2_DEVICE_H_
 
-#include "Driver\OniDriverAPI.h"
+#include "Driver/OniDriverAPI.h"
 #include "Kinect2StreamImpl.h"
 
 struct IKinectSensor;
@@ -35,7 +35,7 @@ namespace kinect2_device
       Kinect2StreamImpl* m_pColorStream;
       Kinect2StreamImpl* m_pIRStream;
       int m_numSensors;
-      LONGLONG m_perfCounter;
+      long long m_perfCounter;
       OniSensorInfo m_sensors[10];
   };
 } // namespace kinect2_device
